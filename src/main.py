@@ -26,11 +26,12 @@ async def bot():
 
 @app.route("/reset")
 def resethook():
-    url = request.args.get('url')
-    app.logger.info(f"Using {url} as endpoint")
-    return setWebhook(url)
+    url = request.base_url
+    return setWebhook((url.split(sep="/"))[2]+'/bot')
 
-
+@app.route("/test")
+def test():
+    return request.base_url
 
 if __name__ == "__main__":
     app.run(debug=True,host="0.0.0.0",port=int(os.environ.get("PORT", 8080)))
